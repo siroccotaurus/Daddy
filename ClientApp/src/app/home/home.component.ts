@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ICharacter, ICharacterResponse } from '../interfaces';
+import { ICharacter, ICharacterResponse } from '../interfaces'; 
 
 const httpOptions = {
   headers: new HttpHeaders({

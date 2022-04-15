@@ -29,7 +29,7 @@ namespace DungeonsAndDragonsWeb.Models.Views
 
         public bool Update()
         {
-            if (DatabaseDelegator.HasConnection)
+            if (DatabaseDelegator.HasRoute)
             {
                 if (autoUpdate && !started)
                 {

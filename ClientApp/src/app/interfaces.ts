@@ -1,9 +1,12 @@
 import { RaceType } from './enumerators';
 
+export interface ISimpleQuestion {
+  text: string;
+}
+
 export interface IUser {
-  username: string;
+  email: string;
   password: string;
-  mail: string;
 
   validate(): boolean;
 }

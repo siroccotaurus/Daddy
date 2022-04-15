@@ -1,5 +1,5 @@
 import { Inject } from '@angular/core';
-import { ICharacter, IUser } from './interfaces';
+import { ICharacter, ISimpleQuestion, IUser } from './interfaces';
 import { RaceType } from './enumerators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -9,22 +9,23 @@ const httpOptions = {
   }
 }
 
-export class User implements IUser {
-  username: string;
-  password: string;
-  mail: string;
+export class SimpleQuestion implements ISimpleQuestion {
+  text: string;
+  constructor(text: string) { this.text = text;}
+}
 
-  constructor(username: string, password: string, mail: string) {
-    this.username = username;
-    this.password = password;
-    this.mail = mail;
+export class User implements IUser {
+  email: string;
+  password: string;
+
+  constructor(mail: string, password: string) {
+    this.email = mail;
+    this.password = password;   
   }
 
   validate(): boolean {
     var rg = new RegExp(/[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/);
-    if (this.username.length < 3 || this.username.length > 15) return false;
-    else if (this.password.length < 3 || this.password.length > 31) return false;
-    else if (this.mail.length < 3 || this.mail.length > 63 || !rg.test(this.mail)) return false;
+    if (this.email.length < 3 || this.email.length > 63 || !rg.test(this.email)) return false;
     return true;
   }
 }

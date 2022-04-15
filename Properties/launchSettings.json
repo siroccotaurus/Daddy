@@ -1,4 +1,8 @@
 ﻿{
+  "dependencies": {
+    "Microsoft.Extensions.Caching.Memory": "1.0.0",
+    "Microsoft.AspNetCore.Session": "1.0.0"
+  },
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,

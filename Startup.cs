@@ -1,12 +1,13 @@
+using DungeonsAndDragonsWeb.Controllers;
 using DungeonsAndDragonsWeb.Models.Resources;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
+using System;
 
 namespace DungeonsAndDragonsWeb
 {
@@ -17,6 +18,9 @@ namespace DungeonsAndDragonsWeb
             Configuration = configuration;
             ConfigurationHelper.SetConfigFile(configuration);
             DatabaseDelegator.SetConnection(ConfigurationHelper.GetMySQLConnectionString());
+
+            if (DatabaseDelegator.TryConnection()) Console.WriteLine("info: Database connection is ready for use.");
+            else Console.WriteLine("fail: Database connection is not working.");
         }
 
         public IConfiguration Configuration { get; }
@@ -29,6 +33,22 @@ namespace DungeonsAndDragonsWeb
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
+            });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddControllers().AddNewtonsoftJson();
+            CookieBuilder cb = new CookieBuilder();
+            cb.Name = MainController.sKey;
+            cb.IsEssential = true;
+            cb.Expiration = TimeSpan.FromDays(30);
+            cb.SecurePolicy = CookieSecurePolicy.Always;
+            services.AddSession(opts =>
+            {
+                opts.Cookie = cb;
+                opts.IdleTimeout = TimeSpan.FromMinutes(1);
             });
         }
 
@@ -55,13 +75,13 @@ namespace DungeonsAndDragonsWeb
 
             app.UseRouting();
 
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-            });
-
+            });           
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
