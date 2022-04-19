@@ -96,6 +96,16 @@ button {
     border-radius: 10px;
 }
 
+button[type=reset] {
+    background-color: slategray;
+    border-color: #333333;
+}
+
+input ~ i.fa-eye {
+    display: inline-block;
+    transform: translateX(-150%);
+}
+
 @media (min-width: 768px) {
     h1 {
         font-size: 64px;

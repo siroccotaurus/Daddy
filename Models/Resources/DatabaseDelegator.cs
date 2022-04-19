@@ -145,6 +145,21 @@ namespace DungeonsAndDragonsWeb.Models.Resources
             }
             finally { conn.Close(); }
         }
+
+        public static bool SetUser(string username, string password)
+        {
+            MySqlConnection conn = GetConnection();
+            try
+            {
+                string sql = "INSERT INTO user(email,password) VALUES (@email,@password)";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@email", username);
+                cmd.Parameters.AddWithValue("@password", password);
+                return cmd.ExecuteNonQuery() == 1;
+            }
+            finally { conn.Close(); }
+        }
+        public static bool SetUser(User u) => SetUser(u.Email, u.Password);
     }
     public class DatabaseConnectionException : Exception
     {

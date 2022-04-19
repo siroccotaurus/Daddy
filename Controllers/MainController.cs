@@ -17,11 +17,10 @@ namespace DungeonsAndDragonsWeb.Controllers
     [Route("MainController")]
     public class MainController : ControllerBase
     {
+        readonly ILogger<MainController> _logger;
         public const string sKey = "SESSION";
         static bool first = true;
-        public static IndexVM ivm;
-
-        readonly ILogger<MainController> _logger;
+        public static IndexVM ivm;       
 
         public MainController(ILogger<MainController> logger)
         {

@@ -14,15 +14,19 @@ namespace DungeonsAndDragonsWeb.Controllers
     [Route("UserController")]
     public class UserController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly ILogger<UserController> _logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-        public UserController(ILogger<WeatherForecastController> logger)
+        public UserController(ILogger<UserController> logger) { _logger = logger; }
+
+        [HttpPost("Register")]
+        public UserResponse Register([FromBody] User u)
         {
-            _logger = logger;
+            if (string.IsNullOrEmpty(u.Email) || string.IsNullOrEmpty(u.Password)) return new UserResponse(false, "Neither email nor password can be empty!");
+            else
+            {
+                DatabaseDelegator.SetUser(u);
+                return new UserResponse(true);
+            }
         }
 
         [HttpPost("Login")]

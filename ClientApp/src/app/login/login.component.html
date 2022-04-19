@@ -1,24 +1,26 @@
-<form (submit)="Login(this.email, this.password)" novalidate>
+<form (submit)="Sign(this.email, this.password, this.passwordC)">
   <div id="login_bg">
     <div id="login_box">
       <div class="w-75 mb-4">
         <i class="fa-solid fa-user w-20 display-inline-block"></i>
-        <input class="w-80 display-inline-block" placeholder="Enter email..." type="email" name="email" [(ngModel)]="email" required />
+        <input class="w-75 display-inline-block" placeholder="Enter email..." type="email" name="email" [(ngModel)]="email" required />
       </div>
       <div style="flex-basis: 100%; height: 0px;"></div>
       <div class="w-75 mb-4">
         <i class="fa-solid fa-key w-20 display-inline-block"></i>
-        <input class="w-80 display-inline-block" placeholder="Enter password..." type="password" name="password" [(ngModel)]="password" required />
+        <input class="w-75 display-inline-block" placeholder="Enter password..." type="password" name="password" [(ngModel)]="password" required />
+        <i class="fa-solid fa-eye" onmousedown="ShowPasswords(this.parentElement.parentElement)" onmouseup="HidePasswords(this.parentElement.parentElement)"></i>
       </div>
       <div id="login_password" class="w-75 mb-4">
         <i class="fa-solid fa-lock w-20 display-inline-block"></i>
-        <input class="w-80 display-inline-block" placeholder="Enter password again..." type="password" name="passwordC" [(ngModel)]="passwordC" required />
+        <input class="w-75 display-inline-block" placeholder="Enter password again..." type="password" name="passwordC" [(ngModel)]="passwordC" required />
       </div>
       <div style="flex-basis: 100%; height: 0px;"></div>
       <button id="login_btn" class="mb-1 fg-ghostwhite" type="submit">Log in</button>
+      <button class="mb-1 ml-4 fg-ghostwhite" type="reset">Reset</button>
       <div style="flex-basis: 100%; height: 0px;"></div>
-      <p id="login_op1" class="m-0 fs-3 fg-gray">Maybe not registered yet? <a onclick="initAs('register')" style="color: #0366d6;">Sign up now!</a></p>
-      <p id="login_op2" class="m-0 fs-3 fg-gray">Alredy registered? <a onclick="initAs('login')" style="color: #0366d6;">Sign in!</a></p>
+      <p id="login_op1" class="m-0 fs-3 fg-gray">Maybe not registered yet? <a (click)="_InitAs('register')" style="color: #0366d6;">Sign up now!</a></p>
+      <p id="login_op2" class="m-0 fs-3 fg-gray">Alredy registered? <a (click)="_InitAs('login')" style="color: #0366d6;">Sign in!</a></p>
     </div>
   </div>
 </form>
